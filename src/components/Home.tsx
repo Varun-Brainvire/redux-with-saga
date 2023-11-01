@@ -22,6 +22,7 @@ const Home: React.FC = () => {
   }, [dispatch]);
 
   const [input, setInput] = useState<any>({
+    id:Math.floor(Math.random() * 1000),
     name: "",
     email: "",
     phone: "",

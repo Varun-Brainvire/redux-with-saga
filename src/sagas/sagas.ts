@@ -56,25 +56,22 @@ function* AddUserFunc(action: any): Generator<StrictEffect, void, any> {
   }
 }
 
-function* EditUserFunc(action:any) :Generator<StrictEffect, void, any> {
-  console.log(action,"In edit saga")
+function* EditUserFunc(action:any) {
+  console.log(action?.payload?.name?.id,"In edit saga")
   try {
-    const data = axios.put(`https://jsonplaceholder.typicode.com/users/${action?.payload?.name?.id}`,{
+    yield axios.put(`https://jsonplaceholder.typicode.com/users/${action?.payload?.name?.id}`,{
       data:action.payload,
     })
     .then((response) => {
       console.log(response.data, 'dta res')
-    }).then((data) =>{
-      // return data
-      console.log(data, 'dta')
-      
-    } )
+      return response.data
+    })
+    yield put(setEditUser(action.payload.name));
   } catch(error:any) {
     console.log("ERROR", error);
     yield put(toggleLoader(false));
   }
   console.log(action.payload.name,"After API")
-  yield put(setEditUser(action.payload.name));
 }
 
 export default function* globalWatcher(): Generator<StrictEffect, void, any> {

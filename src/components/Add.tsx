@@ -6,14 +6,12 @@ import { Box, Button, FormControl, Grid, Container } from "@mui/material";
 // import { useNavigate } from "react-router-dom";
 
 // let id: number = 10;
-const Add: React.FC<any> = ({input, setInput,isEdit,setIsEdit}) => {
-
-  console.log(input, 'input add')
+const Add: React.FC<any> = ({ input, setInput, isEdit, setIsEdit }) => {
+  console.log(input, "input add");
   // const navigate = useNavigate();
   const users = useSelector((state: any) => state.userData.users);
-  console.log(users)
+  console.log(users);
 
-  
   useEffect(() => {
     console.log("USER LIST UPADTED", users);
   }, [users]);
@@ -33,7 +31,7 @@ const Add: React.FC<any> = ({input, setInput,isEdit,setIsEdit}) => {
       addUser({
         // id: ++id,
         // name: input,
-        id: Math.random(),
+        // id: Math.random(),
         name: input,
       })
     );
@@ -61,7 +59,7 @@ const Add: React.FC<any> = ({input, setInput,isEdit,setIsEdit}) => {
       phone: "",
     });
     // navigate("/add-user");
-  }
+  };
 
   return (
     <>
@@ -105,14 +103,15 @@ const Add: React.FC<any> = ({input, setInput,isEdit,setIsEdit}) => {
               </Grid>
             </Grid>
             <Box sx={{ textAlign: "right", pt: 5 }}>
-              {isEdit == true ? <Button variant="contained" onClick={handleEdit}>
-                Edit User
-              </Button>
-            : <Button variant="contained" onClick={handleAdd}>
-            Add User
-          </Button>  
-            }
-              
+              {isEdit == true ? (
+                <Button variant="contained" onClick={handleEdit}>
+                  Edit User
+                </Button>
+              ) : (
+                <Button variant="contained" onClick={handleAdd}>
+                  Add User
+                </Button>
+              )}
             </Box>
           </Box>
         </FormControl>

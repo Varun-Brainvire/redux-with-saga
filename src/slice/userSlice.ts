@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 import { Immutable } from "immer";
 
 export interface IGlobalState {
@@ -23,8 +23,8 @@ export const userData = createSlice({
       state.isLoading = true;
     },
     addUser: (state: any, action) => {
-      console.log(action,"action")
-      console.log(state,"State in add reducer")
+      console.log(action, "action");
+      console.log(state, "State in add reducer");
       state.isLoading = true;
     },
     setAddUser: (state: any, action) => {
@@ -41,18 +41,38 @@ export const userData = createSlice({
       console.log(state.users, "sttae");
       return state;
     },
-    editUser:(state,action) => {
-      console.log(state.users, 'state in edit')
+    editUser: (state, action) => {
+      console.log(current(state.users), "state in edit");
       state.isLoading = true;
       //state.users = [action.payload]
     },
     setEditUser: (state: any, action) => {
-      console.log(action,"action in edit")
-      console.log(state,"In setEditUser")
+      console.log(action, "action in edit");
+      let i = null;
+      // console.log(action.payload.id, "id");
+      state.users.find((item: any, index: any) => {
+        if (item.id === action.payload.id) {
+          return (i = index);
+        } else {
+          return null;
+        }
+      });
+
+      if (i !== null) state.users[i] = action.payload;
+      else return;
+
+      console.log(state, "In setEditUser");
     },
   },
 });
 
-export const { getUserData, toggleLoader, addUser, deleteUser, setAddUser,editUser,setEditUser } =
-  userData.actions;
+export const {
+  getUserData,
+  toggleLoader,
+  addUser,
+  deleteUser,
+  setAddUser,
+  editUser,
+  setEditUser,
+} = userData.actions;
 export default userData.reducer;
